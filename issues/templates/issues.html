@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Issues</h1>
+{{issues}}<hr>
+{{fields}}<hr>
+
+<div class="row row-flex">
+    {% for issue in issues %}
+    <div class="col-xs-10 col-xs-offset-1  display panel panel-default">
+
+        <div class="panel-body">
+
+            <h3>{{issue.category}}: {{ issue.name }}</h3>
+            <p>Created: {{ issue.date_issued }}</p>
+            <p class="">Description: {{ issue.description }}</p>
+            <p>Comment:{{ issue.comment }}</p>
+            <p>Accepted: {{ issue.date_accepted }}</p>
+            <p>Started: {{ issue.date_started }}</p>
+            
+        
+            
+            {% for field in fields  %}
+                <p>{{ field }}</p>
+            {% endfor%}
+            
+
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock  %}

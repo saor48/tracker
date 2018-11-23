@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Bug Report Form</h1>
+
+
+<div class="row row-flex">
+    
+    <div class="display">
+            <form action="{% url 'bug' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Report a Bug</button>
+            </form>
+    </div>
+    
+</div>   
+
+{% endblock %}
