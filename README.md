@@ -1,3 +1,7 @@
+cr  ud
+
+
+------------------------------------------
 def myFunction(request):
     myObj = MyObjectType()
     myObj.customParameter = parameterX
@@ -35,5 +39,28 @@ Django has a sendmail library that you can use once you get your app started
 https://docs.djangoproject.com/en/1.9/topics/email/
 
 --------------------------..............................
+class LocationForm(forms.ModelForm):
 
+    auto_email_list = forms.CharField(required=False, widget=forms.Textarea(attrs={'rows': 2, 'cols': 40}))
+    notes = forms.CharField(required=False, widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
+
+    class Meta:
+        model = Location
+        exclude = ['id']
+---------------------
+    query = Issue(
+        name = "new issue",
+        description = "created in views",
+        comment = "",
+        category = "bug",
+        date_issued = Date.today, 
+        date_accepted = None,
+        date_started = None,
+        date_completed = None,
+        price = None,
+        )
+    
+    if request.method == "POST":
+        query.save()
+        return redirect(reverse('issues'))
 
