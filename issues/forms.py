@@ -13,9 +13,10 @@ class CreateIssueForm(forms.Form):
 
 
 class EditIssueForm(forms.ModelForm):
-    
+    id = forms.CharField(widget=forms.HiddenInput())
+    description = forms.CharField(required=True, widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
     class Meta:
         model = Issue
-        fields = ('name', 'description', 'comment', 'date_accepted', 'date_started')
+        fields = ('id', 'name', 'comment','category', 'date_accepted', 'date_started', 'date_completed')
         
     

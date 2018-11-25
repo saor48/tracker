@@ -6,29 +6,32 @@
 {{issues}}<hr>
 
 <div class="row row-flex">
-    {% for issue in issues %}
-    <div class="col-xs-10 col-xs-offset-1  display panel panel-default">
-
-        <div class="panel-body">
-
-            <h3>{{issue.category}}: {{ issue.name }}</h3>
-            <p>Created: {{ issue.date_issued }}</p>
-            <p class="">Description: {{ issue.description }}</p>
-            <p>Comment:{{ issue.comment }}</p>
-            <p>Accepted: {{ issue.date_accepted }}</p>
-            <p>Started: {{ issue.date_started }}</p>
+   {% for issue in issues %}
+   
+   <div class="col-xs-10 col-xs-offset-1  display panel panel-default">
+      <div class="panel-body">
+         {{ issue.id }}
+         <h3>{{issue.category}}: {{ issue.name }}</h3>
+         <p>Created: {{ issue.date_issued }}</p>
+         <p class="">Description: {{ issue.description }}</p>
+         <p>Comment:{{ issue.comment }}</p>
+         <p>Accepted: {{ issue.date_accepted }}</p>
+         <p>Started: {{ issue.date_started }}</p>
             
-        
-            
-            {% for field in fields  %}
-                <p>{{ field }}</p>
-            {% endfor%}
-            
+         <form class="form-inline" method="post" action="{% url 'edit_issue' %}">
+            {% csrf_token %}
+            <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>Edit</button>
+         </form>
+         <form class="form-inline" method="post" action="{% url 'delete_issue' %}">
+            {% csrf_token %}
+            <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-delete" aria-hidden="true"></span>Delete</button>
+         </form>
 
-
-        </div>
-    </div>
-    {% endfor %}
+      </div>
+   </div>
+   {% endfor %}
 </div>
 
 {% endblock  %}

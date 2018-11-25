@@ -1,7 +1,9 @@
+form {
+    width: 50%;
+}
 h1 { 
     text-align: center;
 }
-
-form {
-    width: 50%;
+.right {
+    float: right;
 }
