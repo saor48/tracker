@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bootstrap_tags %}
 
 {% block content %}
 
@@ -12,7 +13,7 @@
                 {% csrf_token %}
                 <div class="form-group col-xs-10 col-xs-offset-1">
 
-                {{ bugform }}
+                {{ bugform | as_bootstrap}}
                 
                 <button type="submit">Report a Bug</button>
                 </div>

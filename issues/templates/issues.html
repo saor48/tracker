@@ -17,6 +17,7 @@
          <p>Comment:{{ issue.comment }}</p>
          <p>Accepted: {{ issue.date_accepted }}</p>
          <p>Started: {{ issue.date_started }}</p>
+         <p>Completed: {{ issue.date_completed }}</p>
             
          <form class="form-inline" method="post" action="{% url 'edit_issue' %}">
             {% csrf_token %}
