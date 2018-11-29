@@ -57,4 +57,5 @@
 
 ## Credits
 1. Stackoverflow -for so many things.
+2. https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html
 
