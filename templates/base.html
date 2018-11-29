@@ -15,13 +15,14 @@
     <nav class="navbar navbar-default">
         <ul class="nav navbar-nav">
             {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}">Profile</a></li>   
+                <li><a href="{% url 'get_profile' %}">Profile</a></li>   
                 <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'bug' %}">Bugs</a></li>
+                <li><a href="{% url 'issues' %}">Issues</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'registration' %}">Register</a></li>
             {% endif %}
-            <li><a href="{% url 'bug' %}">Bugs</a></li>
         </ul>
     </nav>
     

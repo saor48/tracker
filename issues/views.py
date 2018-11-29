@@ -1,24 +1,62 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from .models import Issue
 from datetime import date as Date
 from .forms import CreateIssueForm, EditIssueForm
+from pprint import pprint
+#now.strftime("%Y-%m-%d %H:%M")
 
 
-#----------------------------------Functioms-----------------------------------------#
+#----------------------------------Functions-----------------------------------------#
 def get_issue(issue_id):
     query = Issue.objects.get(pk=issue_id)
     print("getissue--------", query)
     return query
+
+def update_profile(user_id,**kwargs):
+    print("user-",user_id)
+    user = User.objects.get(pk=user_id)
+    user.profile.latest_activity_date = Date.today()
+    #now.strftime("%Y-%m-%d")
+    if kwargs is not None:
+        print("kws==", kwargs)
+        for key in kwargs:
+            value = str(kwargs[key])
+            if key == 'bug':
+                user.profile.bugs += ',' + value
+            if key == 'feature':
+                user.profile.features += ',' + value
+            if key == 'paid':
+                user.profile.paid_features += ',' + value
+    print("user-", user)
+    pprint(vars(user))
+    pprint(vars(user.profile))
+    user.save()
+    
 #-----------------------------------Views----------------------------------------#
 
+@login_required
 def issues(request):
     query = Issue.objects.all()
-
+    current_user = request.user
+    print("user-",current_user.id)
+    user = User.objects.get(pk=current_user.id)
+    user.profile.latest_activity_date = Date.today()
+    #now.strftime("%Y-%m-%d")
+    result='' # put result in session/?
+    if result:
+        # set features, bugs, paid_features
+        print("result", result)
+    print("user-", user)
+    pprint(vars(user))
+    pprint(vars(user.profile))
+    user.save()
     return render(request, 'issues.html', { 'issues' : query } )
 
     
 def bug(request):
-    
+   
     if request.method == 'POST':
         form = CreateIssueForm(request.POST)
         if form.is_valid():
@@ -35,13 +73,16 @@ def bug(request):
                     )
             print("query---", query)
             query.save()
+            
+            user_id = request.user.id
+            kwargs = {"bug": query.id}
+            print("result=", user_id," -q-",query.id)
+            update_profile(user_id, **kwargs)
             return redirect(reverse('issues'))
     else:
         form = CreateIssueForm()
     print("form--------", form)        
     return render(request, 'bug.html', {'bugform': form})
-    
-
     
     
 def edit_issue(request):
