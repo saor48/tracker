@@ -54,6 +54,16 @@ def issues(request):
     user.save()
     return render(request, 'issues.html', { 'issues' : query } )
 
+
+def vote(request):
+    issue_id = request.POST.get('issue_id')
+    query = get_issue(issue_id)
+    user_id = request.user.id
+    kwargs = {query.category : query.id}
+    print("resultvote=", user_id," -q-",query.id)
+    update_profile(user_id, **kwargs)
+    return redirect(reverse('issues'))
+
     
 def bug(request):
    
@@ -75,7 +85,7 @@ def bug(request):
             query.save()
             
             user_id = request.user.id
-            kwargs = {"bug": query.id}
+            kwargs = {query.category : query.id}
             print("result=", user_id," -q-",query.id)
             update_profile(user_id, **kwargs)
             return redirect(reverse('issues'))

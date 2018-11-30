@@ -1,9 +1,15 @@
 {% extends 'base.html' %} 
+{% load bootstrap_tags %}
 
 {% block page_title %}{{ user }}'s page{% endblock %}
 
-{% block page_heading %}{{ user }}'s Profile{% endblock %}
-
 {% block content %}
-{{ profile_form }}
+<div class="row row-flex">
+   <div class="col-xs-6 col-xs-offset-4"><h1>{{ user }}'s Profile</h1></div>
+   <div class="col-xs-8 col-xs-offset-2  display panel panel-default">
+      <div class="panel-body">
+         
+{{ profile_form | as_bootstrap }}
+
+</div></div></div>
 {% endblock %}

@@ -1,35 +1,61 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<h1>Issues of Bugs and Features</h1>
 {{issues}}<hr>
 
 <div class="row row-flex">
-   {% for issue in issues %}
+<div class="col-xs-8 col-xs-offset-2"><h1>Issues of Bugs and Features</h1></div>
+</div>
+<hr>
+<div class="row row-flex">
    
+   {% for issue in issues %}
    <div class="col-xs-10 col-xs-offset-1  display panel panel-default">
       <div class="panel-body">
-         {{ issue.id }}
-         <h3>{{issue.category}}: {{ issue.name }}</h3>
-         <p>Created: {{ issue.date_issued }}</p>
-         <p class="">Description: {{ issue.description }}</p>
-         <p>Comment:{{ issue.comment }}</p>
-         <p>Accepted: {{ issue.date_accepted }}</p>
-         <p>Started: {{ issue.date_started }}</p>
-         <p>Completed: {{ issue.date_completed }}</p>
+         <div class="row row-flex">
+            <div class="col-xs-7 col-xs-offset-1  ">
+               <h3>{{issue.category}}: {{ issue.name }} - Id={{ issue.id }}</h3>
+            </div>
             
-         <form class="form-inline" method="post" action="{% url 'edit_issue' %}">
-            {% csrf_token %}
-            <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
-            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>Edit</button>
-         </form>
-         <form class="form-inline" method="post" action="{% url 'delete_issue' %}">
-            {% csrf_token %}
-            <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
-            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-delete" aria-hidden="true"></span>Delete</button>
-         </form>
-
+            <div class="col-xs-1">
+               <form  action="{% url 'vote' %}" method="POST">
+               {% csrf_token %}
+               <input value="{{issue.id}}" name="issue_id"  type="hidden">
+               <input value="vote" name="vote"  type="hidden">
+               <button type="submit" class="btn btn-success">Vote</button>
+               </form>
+            </div>
+            
+            <div class="col-xs-1">
+               <form class="form-inline" method="post" action="{% url 'edit_issue' %}">
+               {% csrf_token %}
+               <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
+               <button type="submit" class="btn btn-primary"></span>Edit</button>
+               </form>
+            </div>
+            
+            <div class="col-xs-1">
+               <form class="form-inline" method="post" action="{% url 'delete_issue' %}">
+               {% csrf_token %}
+               <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
+               <button type="submit" class="btn btn-warning">Delete</button>
+               </form>
+            </div>
+         </div>
+         
+         <div class="row row-flex">
+            <div class="col-xs-6 col-xs-offset-1  ">
+               <p>Created: {{ issue.date_issued }}</p>
+               <p class="">Description: {{ issue.description }}</p>
+               <p>Comment:{{ issue.comment }}</p>
+            </div>
+            <div class="col-xs-4 col-xs-offset-1  ">
+               <p>Accepted: {{ issue.date_accepted }}</p>
+               <p>Started: {{ issue.date_started }}</p>
+               <p>Completed: {{ issue.date_completed }}</p>
+            </div>
+         </div>  
+         
       </div>
    </div>
    {% endfor %}

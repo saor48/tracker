@@ -1,5 +1,6 @@
 # Issue Tracker  
-
+Tracks bugs and feature requests for an App.
+User participation in requests and voting is recorded.
 
 ## UX
 .
