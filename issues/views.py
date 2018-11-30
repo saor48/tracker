@@ -82,6 +82,7 @@ def bug(request):
                     price = None,
                     )
             print("query---", query)
+            print("form---", form)
             query.save()
             
             user_id = request.user.id
