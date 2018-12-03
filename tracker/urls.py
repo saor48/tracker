@@ -20,13 +20,13 @@ from accounts import urls as urls_accounts
 from issues import urls as urls_issues
 from issues.views import issues
 from profiles import urls as urls_profiles
-
+from payments import urls as urls_payments
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include(urls_accounts)),
     url(r'^$', index, name="index"),
-    #url(r'^$', issues, name="issues"),
     url(r'^issues/', include(urls_issues)),
     url(r'^profiles/', include(urls_profiles)),
+    url(r'^payments/', include(urls_payments)),
 ]

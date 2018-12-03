@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load bootstrap_tags %}
+
+
+{% block content %}
+hhiiiiiiiiiiiiiiiiiiiiiiiii
+<div class = "row row-flex">
+    <div class="form-group col-xs-10 col-xs-offset-1">
+        <h5>Features available:{{features}}</h5>
+    </div>
+    <form action="{% url 'pay' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group col-xs-10 col-xs-offset-1">
+
+                Choose Feature:<input type="text" name="feature"/>
+                
+                <button type="submit">Choose Feature</button>
+            </div>
+    </form>
+</div>
+<hr>
+
+{% endblock %}

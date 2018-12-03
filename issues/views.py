@@ -30,7 +30,6 @@ def update_profile(user_id,**kwargs):
             if key == 'paid':
                 user.profile.paid_features += ',' + value
     print("user-", user)
-    pprint(vars(user))
     pprint(vars(user.profile))
     user.save()
     
@@ -40,7 +39,6 @@ def update_profile(user_id,**kwargs):
 def issues(request):
     query = Issue.objects.all()
     current_user = request.user
-    print("user-",current_user.id)
     user = User.objects.get(pk=current_user.id)
     user.profile.latest_activity_date = Date.today()
     #now.strftime("%Y-%m-%d")
@@ -49,7 +47,6 @@ def issues(request):
         # set features, bugs, paid_features
         print("result", result)
     print("user-", user)
-    pprint(vars(user))
     pprint(vars(user.profile))
     user.save()
     return render(request, 'issues.html', { 'issues' : query } )

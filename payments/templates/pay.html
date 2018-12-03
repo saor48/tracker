@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load bootstrap_tags %}
+
+
+{% block content %}
+<div class = "row row-flex">
+    <div class="form-group col-xs-10 col-xs-offset-1">
+        <h5>Features available:{{features}}</h5>
+    </div>
+    
+</div>
+<hr>
+<div class = "row row-flex">
+    <div class=" col-xs-10 col-xs-offset-1">
+        <h5>Feature chosen :{{feature}}</h5>
+        <h5>Price:<span class="glyphicon glyphicon-euro" aria-hidden="true"></span>{{ price }}</h5>
+ 
+    </div>
+    <form action="{% url 'payment' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group col-xs-10 col-xs-offset-1">
+
+                <input type="hidden" name="feature" value={{feature}} />
+                <input value={{price}} type="hidden" name="price" />
+                
+                <button type="submit" name = "payment">Make Payment</button>
+            </div>
+    </form>
+</div>
+{% endblock %}
