@@ -142,15 +142,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 STRIPE_PUBLISHABLE = os.getenv("STRIPE_PUBLISHABLE")
 STRIPE_SECRET = os.getenv("STRIPE_SECRET")
-
-
-#  django.core.exceptions.ImproperlyConfigured: 
-#  You're using the staticfiles app without having set the STATIC_ROOT setting to a filesystem path.
- #!     Error while running '$ python manage.py collectstatic --noinput'.
-  #     See traceback above for details.
- #      You may need to update application code to resolve this error.
-  #     Or, you can disable collectstatic for this application:
- #         $ heroku config:set DISABLE_COLLECTSTATIC=1
-#       https://devcenter.heroku.com/articles/django-assets
        
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
