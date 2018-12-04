@@ -1,3 +1,4 @@
+#issues
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -42,12 +43,6 @@ def issues(request):
     user = User.objects.get(pk=current_user.id)
     user.profile.latest_activity_date = Date.today()
     #now.strftime("%Y-%m-%d")
-    result='' # put result in session/?
-    if result:
-        # set features, bugs, paid_features
-        print("result", result)
-    print("user-", user)
-    pprint(vars(user.profile))
     user.save()
     return render(request, 'issues.html', { 'issues' : query } )
 
@@ -56,9 +51,17 @@ def vote(request):
     issue_id = request.POST.get('issue_id')
     query = get_issue(issue_id)
     user_id = request.user.id
-    kwargs = {query.category : query.id}
-    print("resultvote=", user_id," -q-",query.id)
-    update_profile(user_id, **kwargs)
+    instance=request.user.profile
+    features=instance.features
+    bugs=instance.bugs
+    print("q2--", features, bugs)
+    if str(query.id) not in features and str(query.id) not in bugs:
+        kwargs = {query.category : query.id}
+        print("resultvote=", user_id," -q-",query.id)
+        update_profile(user_id, **kwargs)################# could be in profiles?
+    else:
+        error_message = "You have already voted on this issue"
+        print(error_message)
     return redirect(reverse('issues'))
 
     
@@ -99,8 +102,6 @@ def edit_issue(request):
     print("edit-rfid--", issue_id)
     issue = get_issue(issue_id)
     print("edit-issue--", issue)
-    
-            
     form = EditIssueForm(initial={
                     'id' : issue_id,
                     'name' : issue.name,

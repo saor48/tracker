@@ -13,7 +13,7 @@ def get_profile(request):
 
     
 def update_profile(request):
-    ###############update here########
+    ###############update here######## but for vote ...done in issues!
     
     profile_form = ProfileForm(instance=request.user.profile)
     return render(request, 'profileprofile.html', {'profile_form': profile_form})
