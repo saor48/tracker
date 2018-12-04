@@ -4,7 +4,10 @@ User participation in requests and voting is recorded.
 Payment method included for requested features.
 
 ## UX
-.
+Home page gives a brief explanation of the App and advises users to use the nav links.
+Nav links for signed in users allow direct access to all of the App features
+
+
 
 ## Features
 
