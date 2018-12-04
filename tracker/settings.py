@@ -132,11 +132,25 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
+#       https://devcenter.heroku.com/articles/django-assets
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+# extra places for collectstatic to find static files
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+
 
 STRIPE_PUBLISHABLE = os.getenv("STRIPE_PUBLISHABLE")
 STRIPE_SECRET = os.getenv("STRIPE_SECRET")
 
+
+#  django.core.exceptions.ImproperlyConfigured: 
+#  You're using the staticfiles app without having set the STATIC_ROOT setting to a filesystem path.
+ #!     Error while running '$ python manage.py collectstatic --noinput'.
+  #     See traceback above for details.
+ #      You may need to update application code to resolve this error.
+  #     Or, you can disable collectstatic for this application:
+ #         $ heroku config:set DISABLE_COLLECTSTATIC=1
+#       https://devcenter.heroku.com/articles/django-assets
+       
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
