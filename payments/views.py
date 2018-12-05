@@ -2,6 +2,7 @@
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .forms import MakePaymentForm, OrderForm
 from .models import OrderLineItem
 from django.conf import settings
@@ -66,9 +67,7 @@ def payment(request):
                     feature = feature,
                     )
             order_line_item.save()
-            
-            print("total----", total)
-            print(payment_form.cleaned_data)
+     
             try:
                 customer = stripe.Charge.create(
                     amount = int(total * 100),
@@ -82,6 +81,10 @@ def payment(request):
             if customer.paid:
                 messages.error(request, "You have successfully paid")
                 #--here update profilr------------------------------#########
+                current_user = request.user
+                user = User.objects.get(pk=current_user.id)
+                user.profile.paid_features += ',' + str(feature)
+                user.save()
                 return redirect(reverse('get_profile'))
             else:
                 messages.error(request, "Unable to take payment")
@@ -91,6 +94,7 @@ def payment(request):
     else:
         payment_form = MakePaymentForm()
         order_form = OrderForm()
+ 
     price=request.POST['price']
     feature=request.POST['feature']
     return render(request, "payment.html", {'price':price,
