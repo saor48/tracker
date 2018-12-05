@@ -18,34 +18,6 @@ import stripe
 
 stripe.api_key = settings.STRIPE_SECRET
 
-def pay1(request):
-    print("inpay1-------")
-    instance=request.user.profile
-    features=instance.features
-    name = instance.user
-    return render(request, "pay1.html", {'features': features, 'name':name })
-
-def pay(request):
-    print("inpay-------")
-    instance=request.user.profile
-    features=instance.features
-    name = instance.user
-    price=10
-    if request.method=="POST":
-        feature=request.POST.get('feature')
-        if feature in features:
-            print("fe--", feature)
-            query = Issue.objects.get(pk=feature)  #exist check
-            price = query.price
-            if price == None:
-                price = 21
-            print("price--", price)
-            return render(request, "pay.html", {'feature': feature, 'price':price })
-        else:
-            print('error on feature 43')
-            return redirect(reverse('pay1'))
-    return redirect(reverse('pay1'))        
-            
 
 @login_required()
 def payment(request):
@@ -81,9 +53,9 @@ def payment(request):
             if customer.paid:
                 messages.error(request, "You have successfully paid")
                 #--here update profilr------------------------------#########
-                current_user = request.user
-                user = User.objects.get(pk=current_user.id)
-                user.profile.paid_features += ',' + str(feature)
+               # current_user = request.user
+                user = User.objects.get(pk=request.user.id)
+                user.profile.paid_features += str(feature) + ","
                 user.save()
                 return redirect(reverse('get_profile'))
             else:

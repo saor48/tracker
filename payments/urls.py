@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import payment, pay, pay1
+from .views import payment
 
 
 urlpatterns = [

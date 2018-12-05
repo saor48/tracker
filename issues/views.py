@@ -23,13 +23,13 @@ def update_profile(user_id,**kwargs):
     if kwargs is not None:
         print("kws==", kwargs)
         for key in kwargs:
-            value = str(kwargs[key])
+            value = str(kwargs[key]) + ","
             if key == 'bug':
-                user.profile.bugs += ',' + value
+                user.profile.bugs += value
             if key == 'feature':
-                user.profile.features += ',' + value
+                user.profile.features += value
             if key == 'paid':
-                user.profile.paid_features += ',' + value
+                user.profile.paid_features += value
     print("user-", user)
     pprint(vars(user.profile))
     user.save()
@@ -52,8 +52,8 @@ def vote(request):
     query = get_issue(issue_id)
     user_id = request.user.id
     instance=request.user.profile
-    features=instance.features
-    bugs=instance.bugs
+    features=instance.features.split(",")
+    bugs=instance.bugs.split(",")
     print("q2--", features, bugs)
     if str(query.id) not in features and str(query.id) not in bugs:
         kwargs = {query.category : query.id}

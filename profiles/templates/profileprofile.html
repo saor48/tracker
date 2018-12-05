@@ -23,13 +23,13 @@
          <hr>
          <form name="payment" action="{% url 'payment' %}" method="POST">
             <h6>Select feature to pay:</h6>
-            <select id="feature" name="feature">
-                  <option value="feature" disabled selected>Feature</option>
+            <select id="feature" name="feature" required>
+                  <option></option>
                   {% for item in features %}
                   <option value="{{item}}">{{item}}</option>
                   {% endfor %}
             </select>
-            <input type="hidden" name="price" value="25"/>
+            <input type="hidden" name="price" value="25" />
             {% csrf_token %}
             <input type="submit" name="payment" value="Pay"/>
          </form>

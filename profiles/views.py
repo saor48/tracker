@@ -8,11 +8,12 @@ from .models import Profile
 def get_profile(request):
     profile_form = ProfileForm(instance=request.user.profile)
     instance=request.user.profile
-    feature_list=instance.features
-    paid=instance.paid_features
+    feature_list=instance.features.split(",")
+    paid=instance.paid_features.split(",")
     features = []
     for item in feature_list:
-        if item.isdigit() and item not in paid:
+        if item not in paid and item !="":
+            print("item--", item)
             features.append(item)
     return render(request, 'profileprofile.html', {'profile_form': profile_form, 'features': features})
 
