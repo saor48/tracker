@@ -20,4 +20,10 @@ class EditIssueForm(forms.ModelForm):
         model = Issue
         fields = ['id','name','description','comment','category','date_accepted','date_started','date_completed']
         
+class CommentForm(forms.ModelForm):
+    id = forms.CharField(widget=forms.HiddenInput())
+    description = forms.CharField(label='Description', max_length=254, required=True)
+    class Meta:
+        model = Issue
+        fields = ['id','name','description','comment']
     

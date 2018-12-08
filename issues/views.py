@@ -2,17 +2,18 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from .models import Issue
 from datetime import date as Date
-from .forms import CreateIssueForm, EditIssueForm
+from .forms import CreateIssueForm, EditIssueForm, CommentForm
 from pprint import pprint
 #now.strftime("%Y-%m-%d %H:%M")
-
+#messages.error(request, "Unable to ")
 
 #----------------------------------Functions-----------------------------------------#
 def get_issue(issue_id):
     query = Issue.objects.get(pk=issue_id)
-    print("getissue--------", query)
+    print("getissue--------", query, issue_id)
     return query
 
 def update_profile(user_id,**kwargs):
@@ -33,16 +34,18 @@ def update_profile(user_id,**kwargs):
     print("user-", user)
     pprint(vars(user.profile))
     user.save()
+
     
 #-----------------------------------Views----------------------------------------#
 
 @login_required
 def issues(request):
     query = Issue.objects.all()
-    current_user = request.user
-    user = User.objects.get(pk=current_user.id)
+    user = User.objects.get(pk=request.user.id)
     user.profile.latest_activity_date = Date.today()
     #now.strftime("%Y-%m-%d")
+    pprint(vars(user.profile)) 
+    pprint(vars(user)) 
     user.save()
     return render(request, 'issues.html', { 'issues' : query } )
 
@@ -92,29 +95,58 @@ def bug(request):
             return redirect(reverse('issues'))
     else:
         form = CreateIssueForm()
-    print("form--------", form)        
     return render(request, 'bug.html', {'bugform': form})
     
     
 def edit_issue(request):
     
     issue_id = request.POST.get('issue_id')
-    print("edit-rfid--", issue_id)
     issue = get_issue(issue_id)
-    print("edit-issue--", issue)
     form = EditIssueForm(initial={
                     'id' : issue_id,
                     'name' : issue.name,
                     'description' : issue.description,
-                    'comment' : issue.comment,
+                    'comment' : "",
                     'category' : issue.category,
                     'date_accepted' : issue.date_accepted,
                     'date_started' : issue.date_started,
                     'date_completed' : issue.date_completed
                     })
-
     print("edit--", form)      
-    return render(request, 'editIssue.html', {'edit_issue_form': form})
+    return render(request, 'editIssue.html', {'edit_issue_form': form, 'issue_id':issue_id })
+
+
+def make_comment(request):
+    print("m-c-post",request.POST)
+    issue_id = request.POST.get('issue_id')
+    issue = get_issue(issue_id)
+    form = CommentForm(initial={
+                    'id' : issue_id,
+                    'name' : issue.name,
+                    'description' : issue.description,
+                    'comment' : ""
+                    })
+    return render(request, 'comment.html', {'comment_form': form, 'issue_id':issue_id })
+
+
+def update_comment(request):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['comment'] != '':
+                issue=Issue.objects.get(pk=form.cleaned_data['id'])
+                text= str(form.cleaned_data['comment'])
+                user = str(request.user)
+                date = str(Date.today())
+                commentary = { "text":text, "author":user, "date":date }
+                separator = "(}{)"
+                issue.comments.commentary += str(commentary) + separator 
+                issue.comments.text_length += str(len(commentary)) + ","
+                issue.save()
+        else:
+            messages.error(request, "Unable to process comment")
+            return redirect(reverse('make_comment'))
+    return redirect(reverse('issues'))
 
     
 def update_issue(request):
@@ -124,7 +156,8 @@ def update_issue(request):
         print("upform---",form)
         if form.is_valid():
             #form.save()
-            Issue.objects.filter(pk=form.cleaned_data['id']).update(
+            issue=Issue.objects.filter(pk=form.cleaned_data['id'])
+            issue.update(
                     comment = form.cleaned_data['comment'],
                     date_accepted = form.cleaned_data['date_accepted'],
                     date_started = form.cleaned_data['date_started'],

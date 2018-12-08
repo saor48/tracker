@@ -1,6 +1,8 @@
 from django.db import models
+# from django.contrib.auth.models import User
 
 class Issue(models.Model):
+    # owned_by = models.ForeignKey(User)
     name = models.CharField(max_length=254, default='')
     description = models.TextField()
     comment = models.TextField(blank=True, default='')

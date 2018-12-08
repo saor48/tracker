@@ -35,10 +35,10 @@
             </div>
             
             <div class="col-xs-1">
-               <form class="form-inline" method="post" action="{% url 'delete_issue' %}">
+               <form class="form-inline" method="post" action="{% url 'make_comment' %}">
                {% csrf_token %}
                <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
-               <button type="submit" class="btn btn-warning">Delete</button>
+               <button type="submit" class="btn btn-warning">Comment</button>
                </form>
             </div>
          </div>
@@ -47,7 +47,15 @@
             <div class="col-xs-6 col-xs-offset-1  ">
                <p>Created: {{ issue.date_issued }}</p>
                <p class="">Description: {{ issue.description }}</p>
-               <p>Comment:{{ issue.comment }}</p>
+               <p>
+                  <div class="col-xs-1">
+                     <form class="form-inline" method="post" action="{% url 'get_comments' %}">
+                     {% csrf_token %}
+                     <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
+                     <button type="submit" class="btn btn-warning">View Comments</button>
+                     </form>
+                  </div>
+               </p>
             </div>
             <div class="col-xs-4 col-xs-offset-1  ">
                <p>Accepted: {{ issue.date_accepted }}</p>

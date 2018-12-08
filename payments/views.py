@@ -1,4 +1,4 @@
-#payments------------doing!!-------getprice
+#payments
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -10,11 +10,6 @@ from django.utils import timezone
 from issues.models import Issue
 
 import stripe
-
-
-# ----------link to here from profile make payment button
-#        in profile use session to store details of feature --see cart
-#           must add price somewhere.
 
 stripe.api_key = settings.STRIPE_SECRET
 

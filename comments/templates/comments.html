@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{commentary}}<hr>
+
+<div class="row row-flex">
+<div class="col-xs-8 col-xs-offset-2"><h1>Commentary Page</h1></div>
+</div>
+<hr>
+<div class="row row-flex">
+   
+   <div class="col-xs-10 col-xs-offset-1  display panel panel-default">
+      <div class="panel-body">
+         <div class="row row-flex">
+            <div class="col-xs-10 col-xs-offset-1  ">
+               <h3>{{issue.category}}: {{ issue.name }} - Id={{ issue.id }}</h3>
+            </div>
+         </div>
+         <hr>
+         <div class="row row-flex">
+         
+            {% for item in commentary %}
+            {{ item.text }} <br>{{ item.author }} {{ item.date }}
+            <hr>
+            {% endfor %}
+           
+         </div>
+         
+      </div>
+   </div>
+   
+</div>
+
+{% endblock  %}

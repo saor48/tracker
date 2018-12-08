@@ -21,6 +21,7 @@ from issues import urls as urls_issues
 from issues.views import issues
 from profiles import urls as urls_profiles
 from payments import urls as urls_payments
+from comments import urls as urls_comments
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,4 +30,5 @@ urlpatterns = [
     url(r'^issues/', include(urls_issues)),
     url(r'^profiles/', include(urls_profiles)),
     url(r'^payments/', include(urls_payments)),
+    url(r'^comments/', include(urls_comments)),
 ]

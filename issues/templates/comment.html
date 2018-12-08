@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+{% block content %}
+
+{{error_message}}
+
+<div class="row row-flex">
+   <div class="col-xs-6 col-xs-offset-3"><h1>Make a Comment</h1></div>
+   <div class="col-xs-6 col-xs-offset-3  display panel panel-default">
+      <div class="panel-body">
+          
+         <form action="{% url 'update_comment' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group col-xs-10 col-xs-offset-1">
+
+                {{ comment_form | as_bootstrap }}
+                
+                <button type="submit">Submit</button>
+                </div>
+         </form>
+      </div>
+   </div>
+</div>   
+
+{% endblock %}

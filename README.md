@@ -14,7 +14,7 @@ Nav links for signed in users allow direct access to all of the App features
 ### Existing Features
 - User can view, create, comment, edit, vote and delete issues
 - User can create an issue as either a bug or a requested feature
-- Admin/user shows progress of issue by dates: created, accepted, started, completed
+- Admin shows progress of issue by dates: created, accepted, started, completed
 - User can pay for a feature using stripe credit card processing
 - User profile page shows issues voted/created and features paid
 
@@ -70,6 +70,7 @@ Nav links for signed in users allow direct access to all of the App features
 1. App deployed on Heroku: https://project5-tracker.herokuapp.com/
 2. Files created for this deployment: Procfile, requirements.txt.
 3. Packages installed for deployment: dj-database-url, psycopg2, whitenoise
+4. https://github.com/saor48/tracker.git
 
 ## Credits
 1. Stackoverflow -for so many things.
