@@ -36,7 +36,15 @@ def update_profile(user_id,**kwargs):
     user.save()
 
     
-#-----------------------------------Views----------------------------------------#
+#-def-------------------------------Views----------------------------------------#
+# issues -----------------displays all issues
+# vote -------------------adds issue id to profile bug/feature field
+# 76 bug -----------------create an issue
+# 106 edit_issue ---------form to edit an issue
+# 130 update_issue -------update an issue
+# 149 delete_issue -------delete an issue
+# 160 make_comment -------form to enter a comment
+# 174 update_comment -----save comment to db
 
 @login_required
 def issues(request):
@@ -57,15 +65,12 @@ def vote(request):
     instance=request.user.profile
     features=instance.features.split(",")
     bugs=instance.bugs.split(",")
-    print("q2--", features, bugs)
     if str(query.id) not in features and str(query.id) not in bugs:
         kwargs = {query.category : query.id}
-        print("resultvote=", user_id," -q-",query.id)
         update_profile(user_id, **kwargs)################# could be in profiles?
     else:
-        error_message = "You have already voted on this issue"
-        print(error_message)
-    return redirect(reverse('issues'))
+        messages.error(request, "You have already voted on this issue")
+    return redirect(reverse('get_profile'))
 
     
 def bug(request):
@@ -75,6 +80,7 @@ def bug(request):
         if form.is_valid():
             query = Issue(
                     name = form.cleaned_data['name'],
+                    owned_by = request.user,
                     description = form.cleaned_data['description'],
                     comment = "",
                     category = form.cleaned_data['category'],
@@ -99,10 +105,13 @@ def bug(request):
     
     
 def edit_issue(request):
-    
+    user_id = request.user.id
     issue_id = request.POST.get('issue_id')
     issue = get_issue(issue_id)
-    form = EditIssueForm(initial={
+    
+    print("issue.owned_by.id",issue.owned_by.id)
+    if user_id == issue.owned_by.id:
+        form = EditIssueForm(initial={
                     'id' : issue_id,
                     'name' : issue.name,
                     'description' : issue.description,
@@ -112,8 +121,40 @@ def edit_issue(request):
                     'date_started' : issue.date_started,
                     'date_completed' : issue.date_completed
                     })
+    else:
+        messages.error(request, "Issues can only be edited and deleted by creator")
+        return redirect(reverse("issues"))
     print("edit--", form)      
     return render(request, 'editIssue.html', {'edit_issue_form': form, 'issue_id':issue_id })
+
+
+def update_issue(request):
+    if request.method == 'POST':
+        form = EditIssueForm(request.POST)
+        print("update----",form.data['name'])
+        print("upform---",form)
+        if form.is_valid():
+            #form.save()
+            issue=Issue.objects.filter(pk=form.cleaned_data['id'])
+            issue.update(
+                    comment = form.cleaned_data['comment'],
+                    date_accepted = form.cleaned_data['date_accepted'],
+                    date_started = form.cleaned_data['date_started'],
+                    date_completed = form.cleaned_data['date_completed'],
+                    )
+        else:
+            return render(request, 'editIssue.html', {'edit_issue_form': form, 'error_message': 'Incorrect entry - Try again'})
+    return redirect(reverse('issues'))
+            
+
+def delete_issue(request):
+    
+    issue_id = request.POST.get('issue_id')
+    print("delete-rfid--", issue_id)
+    query = Issue.objects.get(pk=issue_id)
+    issue = query.delete()
+    print("delete-issue--", issue)
+    return redirect(reverse('issues'))       
 
 
 def make_comment(request):
@@ -147,33 +188,5 @@ def update_comment(request):
             messages.error(request, "Unable to process comment")
             return redirect(reverse('make_comment'))
     return redirect(reverse('issues'))
-
     
-def update_issue(request):
-    if request.method == 'POST':
-        form = EditIssueForm(request.POST)
-        print("update----",form.data['name'])
-        print("upform---",form)
-        if form.is_valid():
-            #form.save()
-            issue=Issue.objects.filter(pk=form.cleaned_data['id'])
-            issue.update(
-                    comment = form.cleaned_data['comment'],
-                    date_accepted = form.cleaned_data['date_accepted'],
-                    date_started = form.cleaned_data['date_started'],
-                    date_completed = form.cleaned_data['date_completed'],
-                    )
-        else:
-            return render(request, 'editIssue.html', {'edit_issue_form': form, 'error_message': 'Incorrect entry - Try again'})
-    return redirect(reverse('issues'))
-            
-
-def delete_issue(request):
     
-    issue_id = request.POST.get('issue_id')
-    print("delete-rfid--", issue_id)
-    query = Issue.objects.get(pk=issue_id)
-    issue = query.delete()
-    print("delete-issue--", issue)
-    return redirect(reverse('issues'))       
-            
