@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from .views import issues, bug, edit_issue, get_issue, update_issue, delete_issue, vote, make_comment, update_comment
 
 

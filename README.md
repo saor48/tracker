@@ -12,7 +12,8 @@ Nav links for signed in users allow direct access to all of the App features
 ## Features
 
 ### Existing Features
-- User can view, create, comment, edit, vote and delete issues
+- User can view, comment and vote on any issue
+- Only issue creator can edit and delete issue
 - User can create an issue as either a bug or a requested feature
 - Admin shows progress of issue by dates: created, accepted, started, completed
 - User can pay for a feature using stripe credit card processing
@@ -20,7 +21,6 @@ Nav links for signed in users allow direct access to all of the App features
 
 
 ### Features Left to Implement
-- Improve comment section - seperate line for each comment with creator name
 - Make a user status level based on profile page data. Award points for each action.
 - Graphical display of issues status
 
@@ -35,7 +35,7 @@ Nav links for signed in users allow direct access to all of the App features
 - [Bootstrap] ( http://getbootstrap.com// )
    - The styling library
 ==================
-- [JQuery](https://jquery.com)
+- [JQuery] (https://jquery.com)
     - Generates 
 - [d3] (https://d3js.org/) . 
     - Used to draw the graphs 
@@ -69,8 +69,9 @@ Nav links for signed in users allow direct access to all of the App features
 
 1. App deployed on Heroku: https://project5-tracker.herokuapp.com/
 2. Files created for this deployment: Procfile, requirements.txt.
-3. Packages installed for deployment: dj-database-url, psycopg2, whitenoise
-4. https://github.com/saor48/tracker.git
+3. Env var values removed from settings and put in Heroku Settings - Config Vars
+4. Packages installed for deployment: dj-database-url, psycopg2, whitenoise
+5. https://github.com/saor48/tracker.git
 
 ## Credits
 1. Stackoverflow -for so many things.
