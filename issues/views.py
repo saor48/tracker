@@ -124,7 +124,6 @@ def edit_issue(request):
     else:
         messages.error(request, "Issues can only be edited and deleted by creator")
         return redirect(reverse("issues"))
-    print("edit--", form)      
     return render(request, 'editIssue.html', {'edit_issue_form': form, 'issue_id':issue_id })
 
 
