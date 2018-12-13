@@ -3,9 +3,9 @@ from django import forms
 
 class ProfileForm(forms.ModelForm):
     
-    features = forms.CharField(label="Features")
-    bugs = forms.CharField()
-    paid_features = forms.CharField(label="Paid")
+    features = forms.CharField(label="Voted Features")
+    bugs = forms.CharField(label="Voted Bugs")
+    paid_features = forms.CharField(label="Paid Features")
     
     class Meta:
         model = Profile

@@ -6,7 +6,7 @@ Payment method included for requested features.
 ## UX
 Home page gives a brief explanation of the App and advises users to use the nav links.
 Nav links for signed in users allow direct access to all of the App features
-
+Prominent buttons allow users to take actions such as vote, edit, delete.
 
 
 ## Features
@@ -22,7 +22,6 @@ Nav links for signed in users allow direct access to all of the App features
 
 ### Features Left to Implement
 - Make a user status level based on profile page data. Award points for each action.
-- Graphical display of issues status
 
 ## Technologies Used
 
@@ -61,7 +60,7 @@ Nav links for signed in users allow direct access to all of the App features
     - Tested on browsers Chrome, Edge, Opera.
 
 ### Issues:
-1. Bugs:
+1. Improvements needed for:
     1. when issue deleted, corresponding user profile data not deleted. 
     
 
