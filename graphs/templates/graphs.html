@@ -2,25 +2,29 @@
 
 {% block content %}
 
-status-cr,a,s,com{{status}}<hr>
-delays-a,s,com={{delays}}<hr>
-<div id="data">{{jav}}</div><hr>
+<div id="average" class="hidden">{{jav}}</div>
+<div id="position" class="hidden">{{jpos}}</div>
 
 <div class="row row-flex">
    <div class="col-xs-8 col-xs-offset-2  display panel panel-default">
       <div class="panel-body">
-        <h3>Graph of average delay (in days) between status date changes.</h3>
+        <h3>Average delay (in days) between status date changes.</h3>
         <hr>
-        <div id="bar">
-        
-        </div>
-        
-</div></div></div>
+        <div id="bar1"></div>
+      </div>
+      <div class="panel-body">
+        <h3>Number of issues at each status level.</h3>
+        <hr>
+        <div id="bar2"></div>
+        <hr>
+      </div>
+   </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
             crossorigin="anonymous"></script>
-<script src="/static/js/d3.min.js"></script>
-<script src="/static/js-my/visual.js"></script>
+<script src="/static/lib/js/d3.min.js"></script>
+<script src="/static/js/visual.js"></script>
 
 {% endblock %}
 

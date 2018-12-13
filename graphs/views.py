@@ -49,6 +49,7 @@ def graph(request):
         completed_delays += completed_delay
     
     status = [issued,accepted,started,completed] 
+    status_position = [issued - accepted, accepted - started, started - completed, completed, issued]
     delays = [accepted_delays,started_delays,completed_delays]
     if accepted == 0:       #avoid division by 0
         accepted = 1
@@ -57,10 +58,17 @@ def graph(request):
     if completed == 0:
         completed = 1
     averages = [accepted_delays/accepted,started_delays/started,completed_delays/completed]
-    jav = [{"average":accepted_delays/accepted, "name":"accepted"},
-            {"average":started_delays/started, "name":"started"},
-            {"average":completed_delays/completed, "name":"completed"}]
+    
+    jav = [{'average':accepted_delays/accepted, 'name':'accepted'},
+            {'average':started_delays/started, 'name':'started'},
+            {'average':completed_delays/completed, 'name':'completed'}]
+     
+    jpos = [{'number': issued - accepted, 'name':'issued'},
+            {'number': accepted - started, 'name':'accepted'},
+            {'number': started - completed, 'name':'started'},
+            {'number': completed, 'name':'completed'},
+        ] 
         
-    return render(request, "graphs.html", {"status":status, "delays": delays, "averages":averages, "jav":jav})
+    return render(request, 'graphs.html', {'jpos':jpos, 'jav':jav})
     
     
