@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{issues}}<hr>
+<hr>
 
 <div class="row row-flex">
 <div class="col-xs-8 col-xs-offset-2"><h1>Issues of Bugs and Features</h1></div>
@@ -31,14 +31,6 @@
                {% csrf_token %}
                <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
                <button type="submit" class="btn btn-primary"></span>Edit</button>
-               </form>
-            </div>
-            
-            <div class="col-xs-1">
-               <form class="form-inline" method="post" action="{% url 'make_comment' %}">
-               {% csrf_token %}
-               <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
-               <button type="submit" class="btn btn-warning">Comment</button>
                </form>
             </div>
          </div>

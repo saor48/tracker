@@ -15,7 +15,7 @@ def commentary(request):
     for i in range(0, len(comment_list)-1):
         commentary.append(json.loads(comment_list[i].replace("'", "\"")))
     
-    return render(request, 'comments.html', {'commentary':commentary})    
+    return render(request, 'comments.html', {'commentary':commentary, 'issue':instance})    
         
         
         
