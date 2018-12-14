@@ -7,22 +7,16 @@ from .models import Issue
 from datetime import date as Date
 from .forms import CreateIssueForm, EditIssueForm, CommentForm
 from pprint import pprint
-#now.strftime("%Y-%m-%d %H:%M")
-#messages.error(request, "Unable to ")
 
-#----------------------------------Functions-----------------------------------------#
+#----------------------------------Functions x2--------------------------------------#
 def get_issue(issue_id):
     query = Issue.objects.get(pk=issue_id)
-    print("getissue--------", query, issue_id)
     return query
 
 def update_profile(user_id,**kwargs):
-    print("user-",user_id)
     user = User.objects.get(pk=user_id)
     user.profile.latest_activity_date = Date.today()
-    #now.strftime("%Y-%m-%d")
     if kwargs is not None:
-        print("kws==", kwargs)
         for key in kwargs:
             value = str(kwargs[key]) + ","
             if key == 'bug':
@@ -31,20 +25,18 @@ def update_profile(user_id,**kwargs):
                 user.profile.features += value
             if key == 'paid':
                 user.profile.paid_features += value
-    print("user-", user)
-    pprint(vars(user.profile))
     user.save()
 
     
-#-def-------------------------------Views----------------------------------------#
-# issues -----------------displays all issues
-# vote -------------------adds issue id to profile bug/feature field
-# 76 bug -----------------create an issue
-# 106 edit_issue ---------form to edit an issue
-# 130 update_issue -------update an issue
-# 149 delete_issue -------delete an issue
-# 160 make_comment -------form to enter a comment
-# 174 update_comment -----save comment to db
+# line def-------------------------------Views x8--------------------------------------#
+# 42 issues --------------- displays all issues
+# 53 vote ----------------- adds issue id to profile bug/feature voted field
+# 68 bug ------------------ create an issue
+# 94 edit_issue ----------- form to edit an issue
+# 114 update_issue -------- update an issue
+# 129 delete_issue -------- delete an issue
+# 136 make_comment -------- form to enter a comment
+# 148 update_comment ------ save comment to db
 
 @login_required
 def issues(request):
@@ -67,14 +59,13 @@ def vote(request):
     bugs=instance.bugs.split(",")
     if str(query.id) not in features and str(query.id) not in bugs:
         kwargs = {query.category : query.id}
-        update_profile(user_id, **kwargs)################# could be in profiles?
+        update_profile(user_id, **kwargs)
     else:
         messages.error(request, "You have already voted on this issue")
     return redirect(reverse('get_profile'))
 
     
 def bug(request):
-   
     if request.method == 'POST':
         form = CreateIssueForm(request.POST)
         if form.is_valid():
@@ -90,13 +81,9 @@ def bug(request):
                     date_completed = None,
                     price = None,
                     )
-            print("query---", query)
-            print("form---", form)
             query.save()
-            
             user_id = request.user.id
             kwargs = {query.category : query.id}
-            print("result=", user_id," -q-",query.id)
             update_profile(user_id, **kwargs)
             return redirect(reverse('issues'))
     else:

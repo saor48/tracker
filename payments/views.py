@@ -26,8 +26,6 @@ def payment(request):
             order = order_form.save(commit=False)
             order.date = timezone.now()
             order.save()
-
-                #user_id = request.user.id
                 
             order_line_item = OrderLineItem(
                     order = order, 
@@ -47,8 +45,7 @@ def payment(request):
                 
             if customer.paid:
                 messages.error(request, "You have successfully paid")
-                #--here update profilr------------------------------#########
-               # current_user = request.user
+                #--here update profile
                 user = User.objects.get(pk=request.user.id)
                 user.profile.paid_features += str(feature) + ","
                 user.save()
@@ -69,7 +66,4 @@ def payment(request):
                                 'order_form': order_form, 
                                 'payment_form': payment_form, 
                                 'publishable': settings.STRIPE_PUBLISHABLE})        
-
-
-
 

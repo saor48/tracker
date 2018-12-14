@@ -13,14 +13,7 @@ def get_profile(request):
     features = []
     for item in feature_list:
         if item not in paid and item !="":
-            print("item--", item)
             features.append(item)
     return render(request, 'profileprofile.html', {'profile_form': profile_form, 'features': features})
 
-    
-def update_profile(request):
-    ###############update here######## but for vote ...done in issues!
-    
-    profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'profileprofile.html', {'profile_form': profile_form})
     
