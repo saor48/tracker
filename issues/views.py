@@ -108,21 +108,18 @@ def edit_issue(request):
     user_id = request.user.id
     issue_id = request.POST.get('issue_id')
     issue = get_issue(issue_id)
-    
-    print("issue.owned_by.id",issue.owned_by.id)
     if user_id == issue.owned_by.id:
         form = EditIssueForm(initial={
                     'id' : issue_id,
                     'name' : issue.name,
                     'description' : issue.description,
-                    'comment' : "",
                     'category' : issue.category,
                     'date_accepted' : issue.date_accepted,
                     'date_started' : issue.date_started,
                     'date_completed' : issue.date_completed
                     })
     else:
-        messages.error(request, "-- Error: --> Issues can only be edited and deleted by creator <--")
+        messages.error(request, "-- Action Not Allowed: --> Issues can only be edited and deleted by creator <--")
         return redirect(reverse("issues"))
     return render(request, 'editIssue.html', {'edit_issue_form': form, 'issue_id':issue_id })
 
@@ -130,13 +127,9 @@ def edit_issue(request):
 def update_issue(request):
     if request.method == 'POST':
         form = EditIssueForm(request.POST)
-        print("update----",form.data['name'])
-        print("upform---",form)
         if form.is_valid():
-            #form.save()
             issue=Issue.objects.filter(pk=form.cleaned_data['id'])
             issue.update(
-                    comment = form.cleaned_data['comment'],
                     date_accepted = form.cleaned_data['date_accepted'],
                     date_started = form.cleaned_data['date_started'],
                     date_completed = form.cleaned_data['date_completed'],
@@ -147,17 +140,13 @@ def update_issue(request):
             
 
 def delete_issue(request):
-    
     issue_id = request.POST.get('issue_id')
-    print("delete-rfid--", issue_id)
     query = Issue.objects.get(pk=issue_id)
     issue = query.delete()
-    print("delete-issue--", issue)
     return redirect(reverse('issues'))       
 
 
 def make_comment(request):
-    print("m-c-post",request.POST)
     issue_id = request.POST.get('issue_id')
     issue = get_issue(issue_id)
     form = CommentForm(initial={

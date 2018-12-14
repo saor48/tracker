@@ -17,7 +17,7 @@ class EditIssueForm(forms.ModelForm):
     description = forms.CharField(label='Description', max_length=254, required=True)
     class Meta:
         model = Issue
-        fields = ['id','name','description','comment','category','date_accepted','date_started','date_completed']
+        fields = ['id','name','description','category','date_accepted','date_started','date_completed']
         widgets = {
             'date_accepted': forms.DateInput(attrs={'class':'datepicker'}),
             'date_started': forms.DateInput(attrs={'class':'datepicker'}),

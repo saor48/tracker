@@ -33,25 +33,31 @@ Prominent buttons allow users to take actions such as vote, edit, delete.
     - This project is python driven.
 - [Bootstrap] ( http://getbootstrap.com// )
    - The styling library
-==================
 - [JQuery] (https://jquery.com)
-    - Generates 
+    - Used on graphs page to grab data for d3
+    - Used on edit page with jquery themes for datepicker
 - [d3] (https://d3js.org/) . 
     - Used to draw the graphs 
-- [queue] (https://cdnjs.com/libraries/queue-async). 
-    - Loads data from stored file for d3 use.
-======================
- 
 
 
 ## Testing
 
 ### Tests
 
-1. All nav links tested and correct
+1. All nav links tested and correct page reached
 2. login/logout tested
    -Appropriate nav links appear for logged in/out user
-3. 
+3. Issues page
+    1. Vote button 
+        1. records vote by correct id on profile page
+        2. shows error message if issue already voted on
+    2. Edit button
+        1. Shows error message if user is not issue owner
+        2. if user is owner brings up edit page with correct issue
+    3. View Comments button
+        1. Shows comments for correct issue
+4. Edit page
+    
     
 
 
