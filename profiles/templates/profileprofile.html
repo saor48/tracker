@@ -6,20 +6,24 @@
 {% block content %}
 
 <div class="row row-flex">
-   <div class="col-xs-6 col-xs-offset-4"><h1>{{ user }}'s Profile</h1></div>
+   <header class="col-xs-6 col-xs-offset-4">
+      <h1>{{ user }}'s Profile</h1>
+   </header>
 </div>
 <div class="row row-flex">
    <hr>
    <div class="col-xs-6 col-xs-offset-2 col-md-4 col-md-offset-2 display panel panel-default">
-      <div class="panel-body">
+      <section class="panel-body">
           
          {{ profile_form | as_bootstrap }}
 
-      </div>
+      </section>
    </div>
    <div class="col-xs-6 col-xs-offset-2 col-md-2 col-md-offset-1 display panel panel-default">
-      <div class="panel-body">
-         <h4> Payment</h4>
+      <section class="panel-body">
+         <header>
+            <h4> Payment</h4>
+         </header>   
          <hr>
          <form name="payment" action="{% url 'payment' %}" method="POST">
             <h6>Select feature to pay:</h6>
@@ -32,14 +36,12 @@
             <input type="hidden" name="price" value="25" />
             {% csrf_token %}
             <input type="submit" name="payment" value="Pay"/>
-            <br>
-            <hr>
-            <br>
-            <br>
-            <p>Note: Feature must be in Voted Features.</p>
-         </form>
-         
-      </div>
+         </form>   
+         <hr>
+         <br>
+         <br>
+         <p>Note: Feature must be in Voted Features.</p>
+      </section>
    </div>
 </div>
 

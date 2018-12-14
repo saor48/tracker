@@ -4,18 +4,20 @@
 <hr>
 
 <div class="row row-flex">
-<div class="col-xs-8 col-xs-offset-2"><h1>Issues of Bugs and Features</h1></div>
+   <header class="col-xs-8 col-xs-offset-2">
+      <h1>Issues of Bugs and Features</h1>
+   </header>
 </div>
 <hr>
 <div class="row row-flex">
    
    {% for issue in issues %}
    <div class="col-xs-10 col-xs-offset-1  display panel panel-default">
-      <div class="panel-body">
+      <section class="panel-body">
          <div class="row row-flex">
-            <div class="col-xs-7 col-xs-offset-1  ">
+            <header class="col-xs-7 col-xs-offset-1  ">
                <h3>{{issue.category}}: {{ issue.name }} - Id={{ issue.id }}</h3>
-            </div>
+            </header>
             
             <div class="col-xs-1">
                <form  action="{% url 'vote' %}" method="POST">
@@ -36,7 +38,7 @@
          </div>
          
          <div class="row row-flex">
-            <div class="col-xs-6 col-xs-offset-1  ">
+            <article class="col-xs-6 col-xs-offset-1  ">
                <p>Created: {{ issue.date_issued }} by: {{ issue.owned_by }}</p>
                <p class="pre-scrollable">Description: {{ issue.description }}</p>
                <p>
@@ -48,14 +50,14 @@
                      </form>
                   </div>
                </p>
-            </div>
-            <div class="col-xs-4 col-xs-offset-1">
+            </article>
+            <article class="col-xs-4 col-xs-offset-1">
                <p>Accepted: {{ issue.date_accepted }}</p>
                <p>Started: {{ issue.date_started }}</p>
                <p>Completed: {{ issue.date_completed }}</p>
-            </div>
+            </article>
          </div>  
-      </div>
+      </section>
    </div>
    {% endfor %}
 </div>

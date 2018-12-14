@@ -6,9 +6,11 @@
 {{error_message}}
 
 <div class="row row-flex">
-   <div class="col-xs-6 col-xs-offset-3"><h1>Edit an Issue</h1></div>
+   <header class="col-xs-6 col-xs-offset-3">
+      <h1>Edit an Issue</h1>
+   </header>
    <div class="col-xs-6 col-xs-offset-3  display panel panel-default">
-      <div class="panel-body">
+      <section class="panel-body">
          <div class="col-xs-4 col-xs-offset-4">
                <form class="form-inline" method="post" action="{% url 'delete_issue' %}">
                {% csrf_token %}
@@ -20,12 +22,12 @@
                 {% csrf_token %}
                 <div class="form-group col-xs-10 col-xs-offset-1">
 
-                {{ edit_issue_form | as_bootstrap }}
+                  {{ edit_issue_form | as_bootstrap }}
                 
-                <button type="submit">Submit</button>
+                  <button type="submit">Submit</button>
                 </div>
          </form>
-      </div>
+      </section>
    </div>
 </div>
 

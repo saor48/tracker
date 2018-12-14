@@ -4,20 +4,24 @@
 {% block content %}
 
 <div class="row row-flex">
-    <div class="col-xs-6 col-xs-offset-3"><h1>Bug Report Form</h1></div>
+    <header class="col-xs-6 col-xs-offset-3">
+        <h1>Bug Report Form</h1>
+    </header>
     <div class="col-xs-6 col-xs-offset-3  display panel panel-default">
-      <div class="panel-body">
+        <section class="panel-body">
         
             <form action="{% url 'bug' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group col-xs-10 col-xs-offset-1">
 
-                {{ bugform | as_bootstrap}}
+                    {{ bugform | as_bootstrap}}
                 
                 <button type="submit">Report a Bug</button>
                 </div>
             </form>
             
-</div></div></div>   
+        </section>
+    </div>
+</div>   
 
 {% endblock %}

@@ -1,41 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<hr>
+<div class="row row-flex">
+<header class="col-xs-8 col-xs-offset-2"><h1>Commentary Page</h1></header>
+</div>
 <hr>
 
 <div class="row row-flex">
-<div class="col-xs-8 col-xs-offset-2"><h1>Commentary Page</h1></div>
-</div>
-<hr>
-<div class="row row-flex">
-   <div class="col-xs-4 col-xs-offset-4">
-               <form class="form-inline" method="post" action="{% url 'make_comment' %}">
-               {% csrf_token %}
-               <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
-               <button type="submit" class="btn btn-warning">Make a Comment</button>
-               </form>
-   </div>
    <div class="col-xs-10 col-xs-offset-1  display panel panel-default">
       <div class="panel-body">
          <div class="row row-flex">
-            <div class="col-xs-10 col-xs-offset-1  ">
+            <section class="col-xs-10 col-xs-offset-1  ">
                <h3>{{issue.category}}: {{ issue.name }} - Id={{ issue.id }}</h3>
-            </div>
+            </section>
          </div>
          <hr>
-         
-         <div class="row row-flex">
-         
+         <section class="row row-flex">
             {% for item in commentary %}
-            {{ item.text }} <br>{{ item.author }} {{ item.date }}
+            {{ item.text }} 
+            <br>{{ item.author }} {{ item.date }}
             <hr>
             {% endfor %}
-           
-         </div>
-         
+         </section>
       </div>
    </div>
-   
+   <div class="col-xs-4 col-xs-offset-4">
+            <form class="form-inline" method="post" action="{% url 'make_comment' %}">
+               {% csrf_token %}
+               <input type="hidden" name="issue_id" value="{{ issue.id }}"/>
+               <button type="submit" class="btn btn-warning">Make a Comment</button>
+            </form>
+   </div>
 </div>
-
+<hr>
 {% endblock  %}
